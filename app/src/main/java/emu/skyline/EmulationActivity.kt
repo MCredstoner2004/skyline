@@ -12,6 +12,7 @@ import android.content.res.AssetManager
 import android.graphics.PointF
 import android.os.*
 import android.util.Log
+import android.util.Rational
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
@@ -236,6 +237,8 @@ class EmulationActivity : AppCompatActivity(), SurfaceHolder.Callback, View.OnTo
         }
 
         binding.gameView.holder.addCallback(this)
+
+        binding.gameView.setAspectRatio(if (settings.forceAspectRatio) Rational(16,9) else null)
 
         if (settings.perfStats) {
             binding.perfStats.apply {

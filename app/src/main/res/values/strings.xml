@@ -61,6 +61,9 @@
     <string name="max_refresh_rate">Use Maximum Display Refresh Rate</string>
     <string name="max_refresh_rate_enabled">Sets the display refresh rate as high as possible (Will break most games)</string>
     <string name="max_refresh_rate_disabled">Sets the display refresh rate to 60Hz</string>
+    <string name="force_aspect_ratio">Force 16:9 aspect ratio</string>
+    <string name="force_aspect_ratio_enabled">Letterboxes the image to match a 16:9 aspect ratio</string>
+    <string name="force_aspect_ratio_disabled">Stretches the image to fill the screen</string>
     <!-- Input -->
     <string name="input">Input</string>
     <string name="osc">On-Screen Controls</string>

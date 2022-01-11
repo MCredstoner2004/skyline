@@ -103,6 +103,12 @@
             android:summaryOn="@string/max_refresh_rate_enabled"
             app:key="max_refresh_rate"
             app:title="@string/max_refresh_rate" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:summaryOff="@string/force_aspect_ratio_disabled"
+            android:summaryOn="@string/force_aspect_ratio_enabled"
+            app:key="force_aspect_ratio"
+            app:title="@string/force_aspect_ratio" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="category_input"
