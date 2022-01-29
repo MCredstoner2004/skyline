@@ -59,6 +59,7 @@ namespace skyline {
           initializeControllersId(environ->GetMethodID(instanceClass, "initializeControllers", "()V")),
           vibrateDeviceId(environ->GetMethodID(instanceClass, "vibrateDevice", "(I[J[I)V")),
           clearVibrationDeviceId(environ->GetMethodID(instanceClass, "clearVibrationDevice", "(I)V")),
+          requestTextInputId(environ->GetMethodID(instanceClass, "requestTextInput", "()Ljava/lang/String;")),
           getVersionCodeId(environ->GetMethodID(instanceClass, "getVersionCode", "()I")) {
         env.Initialize(environ);
     }
@@ -102,6 +103,11 @@ namespace skyline {
 
     void JvmManager::ClearVibrationDevice(jint index) {
         env->CallVoidMethod(instance, clearVibrationDeviceId, index);
+    }
+
+    std::string JvmManager::RequestTextInput() {
+        auto text = reinterpret_cast<jstring>(env->CallObjectMethod(instance, requestTextInputId));
+        return env->GetStringUTFChars(text, nullptr);
     }
 
     i32 JvmManager::GetVersionCode() {

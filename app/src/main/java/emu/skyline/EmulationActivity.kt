@@ -6,6 +6,7 @@
 package emu.skyline
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.AssetManager
@@ -19,12 +20,15 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import dagger.hilt.android.AndroidEntryPoint
 import emu.skyline.databinding.EmuActivityBinding
+import emu.skyline.databinding.KeyboardDialogBinding
 import emu.skyline.input.*
 import emu.skyline.loader.getRomFormat
 import emu.skyline.utils.Settings
 import java.io.File
+import java.util.concurrent.FutureTask
 import javax.inject.Inject
 import kotlin.math.abs
+
 
 @AndroidEntryPoint
 class EmulationActivity : AppCompatActivity(), SurfaceHolder.Callback, View.OnTouchListener {
@@ -513,6 +517,21 @@ class EmulationActivity : AppCompatActivity(), SurfaceHolder.Callback, View.OnTo
     fun clearVibrationDevice(index : Int) {
         vibrators[index]?.cancel()
     }
+
+    @Suppress("unused")
+    fun requestTextInput() : String {
+        val keyboardBinding = KeyboardDialogBinding.inflate(layoutInflater)
+        val futureResult : FutureTask<String> = FutureTask<String> { return@FutureTask keyboardBinding.keyboardInput.text.toString() }
+        runOnUiThread {
+            AlertDialog.Builder(binding.root.context)
+                .setView(keyboardBinding.inputDialog)
+                .setPositiveButton(android.R.string.yes, null)
+                .setOnDismissListener { futureResult.run() }
+                .show()
+        }
+        return futureResult.get()
+    }
+
 
     /**
      * @return A version code in Vulkan's format with 14-bit patch + 10-bit major and minor components

@@ -107,6 +107,12 @@ namespace skyline {
         void ClearVibrationDevice(jint index);
 
         /**
+         * @brief Display an alert dialog with a text field
+         * @return The input text
+         */
+        std::string RequestTextInput();
+
+        /**
          * @brief A call to EmulationActivity.getVersionCode in Kotlin
          * @return A version code in Vulkan's format with 14-bit patch + 10-bit major and minor components
          */
@@ -116,6 +122,7 @@ namespace skyline {
         jmethodID initializeControllersId;
         jmethodID vibrateDeviceId;
         jmethodID clearVibrationDeviceId;
+        jmethodID requestTextInputId;
         jmethodID getVersionCodeId;
     };
 }

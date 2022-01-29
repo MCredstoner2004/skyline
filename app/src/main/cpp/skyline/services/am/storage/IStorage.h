@@ -4,20 +4,30 @@
 #pragma once
 
 #include <services/serviceman.h>
+#include <common/span.h>
 
 namespace skyline::service::am {
     /**
      * @brief IStorage is used to open an IStorageAccessor to access a region of memory
      * @url https://switchbrew.org/wiki/Applet_Manager_services#IStorage
      */
-    class IStorage : public BaseService, public std::enable_shared_from_this<IStorage> {
+    class IStorage : public BaseService {
       private:
         size_t offset{}; //!< The current offset within the content for pushing data
 
-      public:
-        std::vector<u8> content; //!< The container for this IStorage's contents
+      protected:
+        IStorage(const DeviceState &state, ServiceManager &manager, bool writable);
 
-        IStorage(const DeviceState &state, ServiceManager &manager, size_t size);
+      public:
+
+        virtual ~IStorage();
+
+        /**
+         * @brief All accesses happen through this
+         */
+        virtual span <u8> GetSpan() = 0;
+
+        bool writable;
 
         /**
          * @brief Returns an IStorageAccessor that can read and write data to an IStorage
@@ -29,15 +39,15 @@ namespace skyline::service::am {
          */
         template<typename ValueType>
         void Push(const ValueType &value) {
-            if (offset + sizeof(ValueType) > content.size())
+            if (offset + sizeof(ValueType) > this->GetSpan().size())
                 throw exception("The supplied value cannot fit into the IStorage");
 
-            std::memcpy(content.data() + offset, reinterpret_cast<const u8 *>(&value), sizeof(ValueType));
+            std::memcpy(this->GetSpan().data() + offset, reinterpret_cast<const u8 *>(&value), sizeof(ValueType));
             offset += sizeof(ValueType);
         }
 
-        SERVICE_DECL(
-            SFUNC(0x0, IStorage, Open)
-        )
+      SERVICE_DECL(
+          SFUNC(0x0, IStorage, Open)
+      )
     };
 }

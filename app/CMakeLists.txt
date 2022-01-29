@@ -201,9 +201,12 @@ add_library(skyline SHARED
         ${source_DIR}/skyline/services/am/controller/ILibraryAppletCreator.cpp
         ${source_DIR}/skyline/services/am/controller/ISelfController.cpp
         ${source_DIR}/skyline/services/am/controller/IWindowController.cpp
+        ${source_DIR}/skyline/services/am/storage/VectorIStorage.cpp
+        ${source_DIR}/skyline/services/am/storage/TransferMemoryIStorage.cpp
         ${source_DIR}/skyline/services/am/storage/IStorage.cpp
         ${source_DIR}/skyline/services/am/storage/IStorageAccessor.cpp
         ${source_DIR}/skyline/services/am/applet/ILibraryAppletAccessor.cpp
+        ${source_DIR}/skyline/services/am/applet/IApplet.cpp
         ${source_DIR}/skyline/services/codec/IHardwareOpusDecoder.cpp
         ${source_DIR}/skyline/services/codec/IHardwareOpusDecoderManager.cpp
         ${source_DIR}/skyline/services/hid/IHidServer.cpp
@@ -267,6 +270,9 @@ add_library(skyline SHARED
         ${source_DIR}/skyline/services/ssl/ISslContext.cpp
         ${source_DIR}/skyline/services/prepo/IPrepoService.cpp
         ${source_DIR}/skyline/services/mmnv/IRequest.cpp
+        ${source_DIR}/skyline/services/applet/applet_creator.cpp
+        ${source_DIR}/skyline/services/applet/software_keyboard/software_keyboard_applet.cpp
+        ${source_DIR}/skyline/services/applet/software_keyboard/software_keyboard_config.cpp
         )
 target_include_directories(skyline PRIVATE ${source_DIR}/skyline)
 # target_precompile_headers(skyline PRIVATE ${source_DIR}/skyline/common.h) # PCH will currently break Intellisense
